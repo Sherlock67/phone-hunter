@@ -11,9 +11,18 @@ const searchPhone = () =>{
 }
 
 const displayResult = (data) =>{
+  const nothingFound = document.getElementById('nothing-found');
   const searchResult = document.getElementById('search-result');
+  if(status == false){
+    const paragraph = document.createElement('p');
+    paragraph.classList.add('d-block')
+    paragraph.innerHTML=`<h5>Aagfagfa</h5>`
+    nothingFound.appendChild(paragraph)
+  }
+  
+  
   data.forEach(phone => {
-    console.log(phone);
+    //console.log(phone);
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -46,12 +55,14 @@ const showPhoneDetails = data => {
   <img src="${data.image}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">${data.releaseDate}</h5>
-    <p class="card-text"></p>
-   
+    <h5>Main Features</h5>
+    <ul class="list-group">
+    <li class="list-group-item">${data.mainFeatures.storage}</li>
+    <li class="list-group-item">${data.mainFeatures.displaySize}</li>
+    <li class="list-group-item">${data.mainFeatures.chipSet}</li>
+    <li class="list-group-item">${data.mainFeatures.memory}</li>
+    </ul>
   </div>`
-  
-  
-  
   ;
   phoneDetails.appendChild(div);
 
