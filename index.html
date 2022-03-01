@@ -14,13 +14,18 @@
     <header>
         <h1 class="text-center mt-5">Know Your Phone</h1>
     </header>
-    <section>
+    <section class="mb-5">
         <div class="input-group mb-3 w-50 mx-auto">
             <input id="search-field" type="text" class="form-control" placeholder="Know about your phone" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button onclick="searchPhone()"class="btn btn-outline-secondary "  type="button" id="button-search">Search</button>
         </div>
     
     </section>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border " id="loader"role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     <section>
         <div class="text-center" id="nothing-found">
 
@@ -32,9 +37,9 @@
         <div class="text-center" id="blank-search">
            
         </div>
-    </section>
+    </section >
     <!-- Single phone details -->
-    <section>
+    <section class="mt-5">
         <div id="phone-details" class="w-50 border-0 h-50 mx-auto">
            
         </div>
@@ -43,7 +48,7 @@
    
 
    <!-- ALL phones -->
-    <section class="container ">
+    <section class="container mt-5">
         <div id="search-result" class=" row row-cols-1 row-cols-md-3 g-5">
           </div>
     </section>

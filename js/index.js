@@ -1,5 +1,12 @@
+//needs dynamic sensor
+//and others
+//20 result
 
+const toggleSpinner = (displayStyle) =>{
+  document.getElementById('loader').style.display = displayStyle;
+}
 const searchPhone = () =>{
+  toggleSpinner('block');
   const nothingFound = document.getElementById('nothing-found');
     const searchField = document.getElementById('search-field')
     const blankSearch = document.getElementById('blank-search');
@@ -20,11 +27,13 @@ const searchPhone = () =>{
       .then(res=>res.json())
       .then(data=>displayResult(data))
     }
+   
+    
 }
 
 
 const displayResult = (result) =>{
- 
+  
   const {data, status} = result;
   const nothingFound = document.getElementById('nothing-found');
   const searchResult = document.getElementById('search-result');
@@ -38,8 +47,9 @@ const displayResult = (result) =>{
      blankSearch.style.display = 'none';
      nothingFound.style.display = 'block';
    } 
+ 
   data.forEach(phone => {
-    console.log(phone);
+    //console.log(phone);
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -54,16 +64,17 @@ const displayResult = (result) =>{
     `;
     searchResult.appendChild(div);
   })
+  toggleSpinner('none');
 }
 const loadPhoneDetails = phoneId =>{
-
+  toggleSpinner('block');
   const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
   fetch(url)
   .then(res=>res.json())
   .then(data =>showPhoneDetails(data.data))
 }
 const showPhoneDetails = data => {
-  const searchResult = document.getElementById('search-result');
+  // const searchResult = document.getElementById('search-result');
   const phoneDetails = document.getElementById('phone-details')
   phoneDetails.textContent = '';
   
@@ -72,39 +83,39 @@ const showPhoneDetails = data => {
   div.innerHTML =`
   <img src="${data.image}" class="card-img-top" alt="...">
   <div class="card-body >
-    
-  
-
-    <h5 class="card-title">${data.releaseDate}</h5>
+    <h5 class="card-title">${data.name}</h5>
+    <h5 class="card-title">${data?.releaseDate ?? "No Release Date Found"}</h5>
     <h5>Main Features</h5>
     <ul class="list-group">
-    <li class="list-group-item">${data.mainFeatures.storage}</li>
-    <li class="list-group-item">${data.mainFeatures.displaySize}</li>
-    <li class="list-group-item">${data.mainFeatures.chipSet}</li>
-    <li class="list-group-item">${data.mainFeatures.memory}</li>
+    <li class="list-group-item">Storage: ${data.mainFeatures.storage}</li>
+    <li class="list-group-item">Display Size${data.mainFeatures.displaySize}</li>
+    <li class="list-group-item">ChipSet${data.mainFeatures.chipSet}</li>
+    <li class="list-group-item">Memory${data.mainFeatures.memory}</li>
     </ul>
     <h5>Sensor</h5>
+    
     <ul class="list-group">
-    <li class="list-group-item">${data.mainFeatures.sensors[0]}</li>
-    <li class="list-group-item">${data.mainFeatures.sensors[1]}</li>
-    <li class="list-group-item">${data.mainFeatures.sensors[2]}</li>
-    <li class="list-group-item">${data.mainFeatures.sensors[4]}</li>
-    <li class="list-group-item">${data.mainFeatures.sensors[5]}</li>
-    <li class="list-group-item">${data.mainFeatures.sensors[6]}</li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[0] ?? "No Sensor Found."} </li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[1] ?? "No Sensor Found."}</li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[2]?? "No Sensor Found."}</li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[4]?? "No Sensor Found."}</li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[5]?? "No Sensor Found."}</li>
+    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[6]?? "No Sensor Found."}</li>
     </ul>
     <h5>Other Features</h5>
     <ul class="list-group">
   
-    <li class="list-group-item">${data.others.GPS}</li>
-    <li class="list-group-item">${data.others.NFC}</li>
-    <li class="list-group-item">${data.others.Radio}</li>
-    <li class="list-group-item">${data.others.USB}</li>
-    <li class="list-group-item">${data.others.WLAN}</li>
+    <li class="list-group-item"><span class="fs-2">GPS:</span>${data.others?.GPS ?? "Others Information not Found." }</li>
+    <li class="list-group-item">NFC${data.others?.NFC ?? "Others Information not Found."}</li>
+    <li class="list-group-item">Radio${data.others?.Radio ?? "Others Information not Found."}</li>
+    <li class="list-group-item">USB${data.others?.USB ?? "Others Information not Found."}</li>
+    <li class="list-group-item">WLAN${data.others?.WLAN ?? "Others Information not Found."}</li>
     </ul>
   </div>`
   ;
   
 
   phoneDetails.appendChild(div);
+  toggleSpinner('none');
 
 }
