@@ -15,6 +15,7 @@ const searchPhone = () =>{
     blankSearch.textContent = '';
     
     if(searchText === ''){
+      toggleSpinner('none');
       const paragraph = document.createElement('p');
       paragraph.classList.add('text-danger');
       paragraph.innerHTML = `Please enter a String value`;
@@ -27,11 +28,7 @@ const searchPhone = () =>{
       .then(res=>res.json())
       .then(data=>displayResult(data))
     }
-   
-    
 }
-
-
 const displayResult = (result) =>{
   
   const {data, status} = result;
@@ -94,28 +91,55 @@ const showPhoneDetails = data => {
     </ul>
     <h5>Sensor</h5>
     
-    <ul class="list-group">
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[0] ?? "No Sensor Found."} </li>
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[1] ?? "No Sensor Found."}</li>
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[2]?? "No Sensor Found."}</li>
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[4]?? "No Sensor Found."}</li>
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[5]?? "No Sensor Found."}</li>
-    <li class="list-group-item">Sensor Name:${data.mainFeatures?.sensors[6]?? "No Sensor Found."}</li>
+    <ul id="all-sensors" class="list-group">
+   
     </ul>
     <h5>Other Features</h5>
-    <ul class="list-group">
+    <ul id="others-feature" class="list-group">
   
-    <li class="list-group-item"><span class="fs-2">GPS:</span>${data.others?.GPS ?? "Others Information not Found." }</li>
-    <li class="list-group-item">NFC${data.others?.NFC ?? "Others Information not Found."}</li>
-    <li class="list-group-item">Radio${data.others?.Radio ?? "Others Information not Found."}</li>
-    <li class="list-group-item">USB${data.others?.USB ?? "Others Information not Found."}</li>
-    <li class="list-group-item">WLAN${data.others?.WLAN ?? "Others Information not Found."}</li>
+   
     </ul>
   </div>`
   ;
   
-
+ 
   phoneDetails.appendChild(div);
+  displaySensor(data.mainFeatures.sensors);
+  OtherFeatures(data.others);
   toggleSpinner('none');
+
+}
+
+const displaySensor = (sensors) => {
+  const allSensors = document.getElementById('all-sensors');
+  // console.log(allSensors);
+  sensors.forEach( sensor=>{
+    const list = document.createElement('li');
+    // console.log(list);
+    // console.log(sensor);
+    list.classList.add('list-group-item');
+    if(!sensor ){
+      list.innerHTML = `No Sensor Found`;
+    }
+    else{
+      list.innerHTML = `${sensor}`;
+    }
+   
+    allSensors.appendChild(list);
+  });
+}
+const OtherFeatures = (others) => {
+  const otherFeatures = document.getElementById('others-feature');
+   for(const other in others){
+    const list = document.createElement('li');
+    list.classList.add('list-group-item');
+    if(!other){
+      list.innerHTML = `No Sensor Found`;
+    }
+    else{
+      list.innerHTML = `${other}`;
+    }
+    otherFeatures.appendChild(list);
+   }
 
 }
