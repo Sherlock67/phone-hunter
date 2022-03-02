@@ -96,9 +96,9 @@ const showPhoneDetails = data => {
     <h5>Main Features</h5>
     <ul class="list-group">
       <li class="list-group-item">Storage: ${data.mainFeatures.storage}</li>
-      <li class="list-group-item">Display Size${data.mainFeatures.displaySize}</li>
-      <li class="list-group-item">ChipSet${data.mainFeatures.chipSet}</li>
-      <li class="list-group-item">Memory${data.mainFeatures.memory}</li>
+      <li class="list-group-item">Display Size:${data.mainFeatures.displaySize}</li>
+      <li class="list-group-item">ChipSet:${data.mainFeatures.chipSet}</li>
+      <li class="list-group-item">Memory:${data.mainFeatures.memory}</li>
     </ul>
     <h5>Sensor</h5>
     <ul id="all-sensors" class="list-group">
@@ -131,17 +131,19 @@ const displaySensor = (sensors) => {
 // for showing others features
 const OtherFeatures = (others) => {
   const otherFeatures = document.getElementById('others-feature');
-
-  for(const [key,data] of Object.entries(others)){
-    const list = document.createElement('li');
-    list.classList.add('list-group-item');
-    if(!key){
-      list.innerHTML = `No Sensor Found`;
-    }
-    else{
+  console.log(otherFeatures);
+  if(!others ){
+    otherFeatures.innerHTML = `No Others Information Found`
+  }
+  else{
+    for(const [key,data] of Object.entries(others)){
+      console.log('hi there');
+      const list = document.createElement('li');
+      list.classList.add('list-group-item');
       list.innerText = `${key} : ${data}`;
-    }
-    otherFeatures.appendChild(list);
-   }
+      otherFeatures.appendChild(list);
+     }
+  }
+  
 
 }
