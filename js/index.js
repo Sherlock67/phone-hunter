@@ -17,7 +17,7 @@ const searchPhone = () =>{
     if(searchText === ''){
       toggleSpinner('none');
       const paragraph = document.createElement('p');
-      paragraph.classList.add('text-danger');
+      paragraph.classList.add('text-danger','fw-bold');
       paragraph.innerHTML = `Please enter a String value`;
       blankSearch.appendChild(paragraph);
       blankSearch.style.display = 'block'
@@ -58,8 +58,8 @@ const displayResult = (result) =>{
     <div class="shadow-lg card border-0 ">
           <img src="${phone.image}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">${phone.phone_name}</h5>
-            <p class="card-text">${phone.brand}</p>
+            <h5 class="card-title">Phone Name: ${phone.phone_name}</h5>
+            <p class="card-text ">Brand Name: ${phone.brand}</p>
             <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-info text-white rounded-pill">Explore More</button>
           </div>
         </div>
@@ -76,10 +76,8 @@ const loadPhoneDetails = phoneId =>{
   .then(data =>showPhoneDetails(data.data))
 }
 const showPhoneDetails = data => {
-  
   const phoneDetails = document.getElementById('phone-details')
   phoneDetails.textContent = '';
-  
   const div = document.createElement('div');
   div.classList.add('card');
   div.innerHTML =`
@@ -89,38 +87,28 @@ const showPhoneDetails = data => {
     <h5 class="card-title">${data.releaseDate ? data.releaseDate:"No Release Date Found."} </h5>
     <h5>Main Features</h5>
     <ul class="list-group">
-    <li class="list-group-item">Storage: ${data.mainFeatures.storage}</li>
-    <li class="list-group-item">Display Size${data.mainFeatures.displaySize}</li>
-    <li class="list-group-item">ChipSet${data.mainFeatures.chipSet}</li>
-    <li class="list-group-item">Memory${data.mainFeatures.memory}</li>
+      <li class="list-group-item">Storage: ${data.mainFeatures.storage}</li>
+      <li class="list-group-item">Display Size${data.mainFeatures.displaySize}</li>
+      <li class="list-group-item">ChipSet${data.mainFeatures.chipSet}</li>
+      <li class="list-group-item">Memory${data.mainFeatures.memory}</li>
     </ul>
     <h5>Sensor</h5>
-    
     <ul id="all-sensors" class="list-group">
-   
     </ul>
     <h5>Other Features</h5>
     <ul id="others-feature" class="list-group">
-  
-   
     </ul>
   </div>`
   ;
-  
- 
   phoneDetails.appendChild(div);
   displaySensor(data.mainFeatures.sensors);
   OtherFeatures(data.others);
   toggleSpinner('none');
-
 }
-
 const displaySensor = (sensors) => {
   const allSensors = document.getElementById('all-sensors');
-
   sensors.forEach( sensor=>{
     const list = document.createElement('li');
-    
     list.classList.add('list-group-item');
     if(!sensor ){
       list.innerHTML = `No Sensor Found`;
@@ -128,23 +116,19 @@ const displaySensor = (sensors) => {
     else{
       list.innerHTML = `${sensor}`;
     }
-   
     allSensors.appendChild(list);
   });
 }
 const OtherFeatures = (others) => {
   const otherFeatures = document.getElementById('others-feature');
-   
+
   for(const [key,data] of Object.entries(others)){
-    
     const list = document.createElement('li');
     list.classList.add('list-group-item');
     if(!key){
-     
       list.innerHTML = `No Sensor Found`;
     }
     else{
-
       list.innerText = `${key} ${data}`;
     }
     otherFeatures.appendChild(list);
