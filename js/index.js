@@ -1,6 +1,6 @@
-//needs dynamic sensor
-//and others
-//20 result
+//needs dynamic sensor ->done
+//and others - done
+//20 result->done
 
 const toggleSpinner = (displayStyle) =>{
   document.getElementById('loader').style.display = displayStyle;
@@ -13,11 +13,12 @@ const searchPhone = () =>{
     const searchText = searchField.value;
     searchField.value = '';
     blankSearch.textContent = '';
-    
+    blankSearch.style.display = 'none'
+    nothingFound.style.display = 'none'
     if(searchText === ''){
       toggleSpinner('none');
       const paragraph = document.createElement('p');
-      paragraph.classList.add('text-danger','fw-bold');
+      paragraph.classList.add('fw-bold','text-danger','alert','alert-primary');
       paragraph.innerHTML = `Please enter a String value`;
       blankSearch.appendChild(paragraph);
       blankSearch.style.display = 'block'
@@ -39,6 +40,7 @@ const displayResult = (result) =>{
   nothingFound.textContent = '';
    if(status === false){
      var paragraph = document.createElement('p');
+     paragraph.classList.add('fw-bold','alert' ,'alert-primary','text-danger');
      paragraph.innerHTML=`No Phone Found`;
      nothingFound.appendChild(paragraph);
      blankSearch.style.display = 'none';
@@ -48,7 +50,7 @@ const displayResult = (result) =>{
   for(const phone of data){
 
     count++;
-    if(count >20){
+    if(count > 20){
       break;
     }
       //console.log(phone);
@@ -56,7 +58,7 @@ const displayResult = (result) =>{
     div.classList.add('col');
     div.innerHTML = `
     <div class="shadow-lg card border-0 ">
-          <img src="${phone.image}" class="card-img-top" alt="...">
+          <img src="${phone.image}" class="card-img-top p-2" alt="...">
           <div class="card-body">
             <h5 class="card-title">Phone Name: ${phone.phone_name}</h5>
             <p class="card-text ">Brand Name: ${phone.brand}</p>
@@ -79,9 +81,9 @@ const showPhoneDetails = data => {
   const phoneDetails = document.getElementById('phone-details')
   phoneDetails.textContent = '';
   const div = document.createElement('div');
-  div.classList.add('card');
+  div.classList.add('card','border-0','rounded','align-items-center');
   div.innerHTML =`
-  <img src="${data.image}" class="card-img-top" alt="...">
+  <img src="${data.image}" class="card-img-top p-3" style="width: 18rem;"alt="...">
   <div class="card-body >
     <h5 class="card-title">${data.name}</h5>
     <h5 class="card-title">${data.releaseDate ? data.releaseDate:"No Release Date Found."} </h5>
@@ -129,7 +131,7 @@ const OtherFeatures = (others) => {
       list.innerHTML = `No Sensor Found`;
     }
     else{
-      list.innerText = `${key} ${data}`;
+      list.innerText = `${key} : ${data}`;
     }
     otherFeatures.appendChild(list);
    }
