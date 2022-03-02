@@ -44,9 +44,14 @@ const displayResult = (result) =>{
      blankSearch.style.display = 'none';
      nothingFound.style.display = 'block';
    } 
- 
-  data.forEach(phone => {
-    //console.log(phone);
+  let count = 0;
+  for(const phone of data){
+
+    count++;
+    if(count >20){
+      break;
+    }
+      //console.log(phone);
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -60,7 +65,7 @@ const displayResult = (result) =>{
         </div>
     `;
     searchResult.appendChild(div);
-  })
+  }
   toggleSpinner('none');
 }
 const loadPhoneDetails = phoneId =>{
@@ -71,7 +76,7 @@ const loadPhoneDetails = phoneId =>{
   .then(data =>showPhoneDetails(data.data))
 }
 const showPhoneDetails = data => {
-  // const searchResult = document.getElementById('search-result');
+  
   const phoneDetails = document.getElementById('phone-details')
   phoneDetails.textContent = '';
   
@@ -81,7 +86,7 @@ const showPhoneDetails = data => {
   <img src="${data.image}" class="card-img-top" alt="...">
   <div class="card-body >
     <h5 class="card-title">${data.name}</h5>
-    <h5 class="card-title">${data?.releaseDate ?? "No Release Date Found"}</h5>
+    <h5 class="card-title">${data.releaseDate ? data.releaseDate:"No Release Date Found."} </h5>
     <h5>Main Features</h5>
     <ul class="list-group">
     <li class="list-group-item">Storage: ${data.mainFeatures.storage}</li>
@@ -112,11 +117,10 @@ const showPhoneDetails = data => {
 
 const displaySensor = (sensors) => {
   const allSensors = document.getElementById('all-sensors');
-  // console.log(allSensors);
+
   sensors.forEach( sensor=>{
     const list = document.createElement('li');
-    // console.log(list);
-    // console.log(sensor);
+    
     list.classList.add('list-group-item');
     if(!sensor ){
       list.innerHTML = `No Sensor Found`;
@@ -130,14 +134,18 @@ const displaySensor = (sensors) => {
 }
 const OtherFeatures = (others) => {
   const otherFeatures = document.getElementById('others-feature');
-   for(const other in others){
+   
+  for(const [key,data] of Object.entries(others)){
+    
     const list = document.createElement('li');
     list.classList.add('list-group-item');
-    if(!other){
+    if(!key){
+     
       list.innerHTML = `No Sensor Found`;
     }
     else{
-      list.innerHTML = `${other}`;
+
+      list.innerText = `${key} ${data}`;
     }
     otherFeatures.appendChild(list);
    }
