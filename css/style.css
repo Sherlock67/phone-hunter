@@ -1,6 +1,9 @@
 .button{
     color: black;
 }
-#loader{
+#nothing-found{
+    display: none;
+}
+#blank-search{
     display: none;
 }
