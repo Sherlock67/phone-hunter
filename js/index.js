@@ -2,9 +2,13 @@
 //and others - done
 //20 result->done
 
+
+
+// Spinner toggler
 const toggleSpinner = (displayStyle) =>{
   document.getElementById('loader').style.display = displayStyle;
 }
+// data fetcher
 const searchPhone = () =>{
   toggleSpinner('block');
   const nothingFound = document.getElementById('nothing-found');
@@ -30,6 +34,7 @@ const searchPhone = () =>{
       .then(data=>displayResult(data))
     }
 }
+// all phones show
 const displayResult = (result) =>{
   
   const {data, status} = result;
@@ -77,6 +82,7 @@ const loadPhoneDetails = phoneId =>{
   .then(res=>res.json())
   .then(data =>showPhoneDetails(data.data))
 }
+//single phone details
 const showPhoneDetails = data => {
   const phoneDetails = document.getElementById('phone-details')
   phoneDetails.textContent = '';
@@ -107,6 +113,7 @@ const showPhoneDetails = data => {
   OtherFeatures(data.others);
   toggleSpinner('none');
 }
+//for showing sensors
 const displaySensor = (sensors) => {
   const allSensors = document.getElementById('all-sensors');
   sensors.forEach( sensor=>{
@@ -121,6 +128,7 @@ const displaySensor = (sensors) => {
     allSensors.appendChild(list);
   });
 }
+// for showing others features
 const OtherFeatures = (others) => {
   const otherFeatures = document.getElementById('others-feature');
 
